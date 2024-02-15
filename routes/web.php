@@ -39,16 +39,4 @@ Route::group(['middleware' => ['auth', 'AdminValidation']], function () {
 		Route::get('/edit/{id}', 'App\Http\Controllers\ManageEmployeeController@edit')->name('manage-employee-edit');
 		Route::any('/delete/{id}', 'App\Http\Controllers\ManageEmployeeController@delete')->name('manage-employee-delete');
 	});
-
-	#Managetype - vinothcl
-	Route::group(['prefix' => '/manage-type', 'page-group' => '/manage-type'], function () {
-		Route::get('/', 'App\Http\Controllers\ManageTypeController@index')->name('manage-type');
-		Route::get('/get-type-list-ajax', 'App\Http\Controllers\ManageTypeController@gettypeListAjax')->name('gettypeListAjax');
-		Route::get('/add', 'App\Http\Controllers\ManageTypeController@add')->name('manage-type-add');
-		Route::post('/save', 'App\Http\Controllers\ManageTypeController@save')->name('manage-type-save');
-		Route::post('/update', 'App\Http\Controllers\ManageTypeController@update')->name('manage-type-update');
-		Route::get('/edit/{id}', 'App\Http\Controllers\ManageTypeController@edit')->name('manage-type-edit');
-		Route::any('/delete/{id}', 'App\Http\Controllers\ManageTypeController@delete')->name('manage-type-delete');
-	});
-
 });

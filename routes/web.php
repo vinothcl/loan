@@ -40,3 +40,17 @@ Route::group(['middleware' => ['auth', 'AdminValidation']], function () {
 		Route::any('/delete/{id}', 'App\Http\Controllers\ManageEmployeeController@delete')->name('manage-employee-delete');
 	});
 });
+
+// Employee
+Route::group(['middleware' => ['auth', 'EmployeeValidation']], function () {
+	#Managelead - vinothcl
+	Route::group(['prefix' => '/manage-lead', 'page-group' => '/manage-lead'], function () {
+		Route::get('/', 'App\Http\Controllers\ManageLeadController@index')->name('manage-lead');
+		Route::get('/get-lead-list-ajax', 'App\Http\Controllers\ManageLeadController@getleadListAjax')->name('getleadListAjax');
+		Route::get('/add', 'App\Http\Controllers\ManageLeadController@add')->name('manage-lead-add');
+		Route::post('/save', 'App\Http\Controllers\ManageLeadController@save')->name('manage-lead-save');
+		Route::post('/update', 'App\Http\Controllers\ManageLeadController@update')->name('manage-lead-update');
+		Route::get('/edit/{id}', 'App\Http\Controllers\ManageLeadController@edit')->name('manage-lead-edit');
+		Route::any('/delete/{id}', 'App\Http\Controllers\ManageLeadController@delete')->name('manage-lead-delete');
+	});
+});

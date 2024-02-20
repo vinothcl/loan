@@ -7,6 +7,8 @@
   <title>{{ config('app.name', 'Laravel') }}</title>
 
   <!-- Google Font: Source Sans Pro -->
+
+  <link rel='shortcut icon' href="{{ asset('assets/favicon.ico') }}" type='image/x-icon' />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <link rel="stylesheet" href="{{ asset('template/plugins/fontawesome-free/css/all.min.css') }}">
   <link rel="stylesheet" href="{{ asset('template/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
@@ -27,7 +29,7 @@
   </nav>
     <aside class="main-sidebar sidebar-light-primary elevation-4">
                 <a href="" class="brand-link" style="text-align: center;">
-                    <span class="brand-text font-weight-light">{{ config('app.name', 'Taxless.in') }}</span>
+                    <img alt="{{ config('app.name', 'Taxless.in') }}" src="{{ asset('assets/pawan-leads-portal-logo.png') }}" style="width: 100%;"></span>
                 </a>
                 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                     <div class="info">
@@ -44,6 +46,14 @@
                         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                             <li class="nav-item">
                                 <a href="{{ route('home') }}" class="nav-link @if(Request::segment(1) == 'home' || Request::segment(1) == '') active-now @endif">
+                                    <i class="nav-icon fas fa-tachometer-alt"></i>
+                                    <p>
+                                        Dashboard
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('manage-lead') }}" class="nav-link @if(Request::segment(1) == 'manage-lead' || Request::segment(1) == '') active-now @endif">
                                     <i class="nav-icon fas fa-address-card"></i>
                                     <p>
                                         All Leads

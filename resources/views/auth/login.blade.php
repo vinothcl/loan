@@ -3,6 +3,9 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
+        <div class="col-md-5">
+            <img alt="{{ config('app.name', 'Taxless.in') }}" src="{{ asset('assets/pawan-leads-portal-logo.png') }}" style="width: 100%;"></span>
+        </div>
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">{{ __('Login') }}</div>

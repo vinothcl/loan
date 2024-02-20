@@ -58,15 +58,18 @@ class User extends Authenticatable {
 			'name' => $info['name'],
 			'email' => $info['email'],
 			'password' => Hash::make($info['password']),
-			'is_admin' => '0',
+			'is_admin' => $info['is_admin'],
 		]);
 	}
 	public function updateEmployee($info) {
 		$data = [
 			'name' => $info['name'],
-			'order_by' => $info['order_by'],
-			'status' => $info['status'],
+			'email' => $info['email'],
+			'is_admin' => $info['is_admin'],
 		];
+		if ($info['password']) {
+			$data['password'] = Hash::make($info['password']);
+		}
 		return $this->where('id', $info['id'])->update($data);
 	}
 	public function deleteEmployee($id) {

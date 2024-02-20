@@ -41,6 +41,8 @@
         <table id="manage-employee" class="table table-bordered">
           <thead>
             <th>Employee Name</th>
+            <th>Employee Email</th>
+            <th>Employee Is Admin</th>
             <th>Action</th>
           </thead>
           <tbody>
@@ -68,6 +70,8 @@
 <script type="text/javascript">
     var thData = [
                     {data: 'name', name: 'name'},
+                    {data: 'email', name: 'email'},
+                    {data: 'is_admin', name: 'is_admin'},
                     {data: 'action', name: 'action', sortable: false},
                   ];
   </script>

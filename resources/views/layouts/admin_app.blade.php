@@ -50,6 +50,7 @@
                                     </p>
                                 </a>
                             </li>
+                            @if(Auth::user() && Auth::user()->is_admin)
                             <li class="nav-item">
                                 <a href="{{ route('manage-employee') }}" class="nav-link @if(Request::segment(1) == 'manage-employee') active-now @endif">
                                     <i class="nav-icon fas fa-users"></i>
@@ -58,6 +59,7 @@
                                     </p>
                                 </a>
                             </li>
+                            @endif
                         </ul>
                     </nav>
                 </div>

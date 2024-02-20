@@ -10,8 +10,8 @@
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="{{ route('admin-index') }}">Home</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('manage-category') }}">{{ $title }}</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('index') }}">Home</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('manage-employee') }}">Manage Employee</a></li>
                     <li class="breadcrumb-item active">Edit</li>
                 </ol>
             </div>
@@ -29,53 +29,43 @@
               @endforeach
             </ul>
           </div>
-        @endif 
-        @if(session()->has('success'))  
+        @endif
+        @if(session()->has('success'))
             <div class="alert alert-success"> {!! session('success') !!} </div>
-        @endif @if(session()->has('error')) 
-            <div class="alert alert-danger"> {!! session('error') !!} </div>  
+        @endif @if(session()->has('error'))
+            <div class="alert alert-danger"> {!! session('error') !!} </div>
         @endif
       <div class="card card-primary">
-        <form role="form" id="add-category" action="{{ route('manage-category-update') }}" name="add-category" method="POST" enctype="multipart/form-data">
+        <form role="form" id="add-category" action="{{ route('manage-employee-update') }}" name="add-category" method="POST" enctype="multipart/form-data">
           @csrf
           <div class="card-body">
             <div class="form-group">
-              <label for="name">Category Name<span class="text-danger">*</span></label>
+              <label for="name">Employee Name<span class="text-danger">*</span></label>
               <input type="text" class="form-control" id="name" name="name" placeholder="Enter name" value="{{ old('name')?old('name'):$info->name }}">
-            </div> 
+            </div>
             <div class="form-group">
-              <label for="order_by">Order</label>
-              <input type="text" class="form-control" id="order_by" name="order_by" placeholder="Enter Order" value="{{ old('order_by')?old('order_by'):$info->order_by }}">
-            </div>           
+              <label for="email">Employee Email<span class="text-danger">*</span></label>
+              <input type="email" class="form-control" id="email" name="email" placeholder="Enter Email" value="{{ old('email')?old('email'):$info->email }}">
+            </div>
             <div class="form-group">
-              <div class="col-xs-12 col-sm-6">
-                <label for="category_pic">Category Pic</label>
-                <div class="custom-file">  
-                  <input type="file" name="category_pic" class="custom-file-input" id="category_pic" accept="image/*">
-                  <label class="custom-file-label" for="category_pic">Choose file</label>
-                </div>
-              </div>
-              @if($info->image)
-              <div class="col-xs-12 col-sm-6">              
-                  <a href="{{ asset($info->image) }}" target="_blank">View Category Picture</a>
-              </div>
-              @endif
-            </div>            
+              <label for="email">Employee Password<span class="text-danger">*</span></label>
+              <input id="password" type="password" class="form-control" name="password" autocomplete="new-password">
+            </div>
             <div class="form-group clearfix">
                 <div class="icheck-primary d-inline">
-                  <input type="radio" id="radioPrimary1" name="status" value="1" {{ $info->status==1?'checked':'' }}>
-                  <label for="radioPrimary1">Active</label>
+                  <input type="radio" id="radioPrimary1" name="is_admin" value="0" {{ $info->is_admin==0?'checked':'' }}>
+                  <label for="radioPrimary1">Is Employee</label>
                 </div>
                 <div class="icheck-danger d-inline">
-                  <input type="radio" id="radioPrimary2" name="status" value="0" {{ $info->status==0?'checked':'' }}>
-                  <label for="radioPrimary2">Inactive</label>
+                  <input type="radio" id="radioPrimary2" name="is_admin" value="1" {{ $info->is_admin==1?'checked':'' }}>
+                  <label for="radioPrimary2">Is Admin</label>
                 </div>
-              </div> 
+              </div>
           </div>
           <div class="card-footer">
             <input type="hidden" name="id" value="{{ $info->id }}">
             <button type="submit" class="btn btn-primary">Submit</button>
-            <a href="{{ route('manage-category') }}" class="btn btn-secondary">Cancel</a>
+            <a href="{{ route('manage-employee') }}" class="btn btn-secondary">Cancel</a>
           </div>
         </form>
       </div>
@@ -100,7 +90,7 @@ $(document).ready(function () {
       },
       status: {
         required: true,
-      }    
+      }
     },
     messages: {
       name: {

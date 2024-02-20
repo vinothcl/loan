@@ -1,8 +1,8 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Helpers\CommonHelper;
 use App\Models\User;
+use Auth;
 use Illuminate\Http\Request;
 
 class ManageEmployeeController extends Controller {
@@ -13,11 +13,23 @@ class ManageEmployeeController extends Controller {
 	public function getEmployeeListAjax(Request $request) {
 		return datatables()->of((new User)->getEmployeeListAjax())
 			->addColumn('action', function ($employee) {
+				if (Auth::id() == $employee->id) {
+					$action = '<div class="action-btn"><a class="btn btn-info btn-xs" title="Edit" href="' . route('manage-employee-edit', $employee->id) . '"><i class="fas fa-times-circle"></i></a>';
+					$action .= ' <a class="btn btn-danger btn-xs" href="javascript:;"><i class="fas fa-times-circle"></i></a></div>';
+					return $action;
+				}
 				$action = '<div class="action-btn"><a class="btn btn-info btn-xs" title="Edit" href="' . route('manage-employee-edit', $employee->id) . '"><i class="fas fa-pencil-alt"></i></a>';
 				$action .= ' <a class="btn btn-danger btn-xs delete-employee" href="javascript:;" data-id="' . $employee->id . '" data-url="' . route('manage-employee-delete', $employee->id) . '"><i class="fas fa-trash"></i></a></div>';
 				return $action;
+
 			})
-			->rawColumns(['action'])
+			->addColumn('is_admin', function ($employee) {
+				if ($employee->is_admin == '1' || $employee->is_admin == 1) {
+					return 'Yes';
+				}
+				return 'No';
+			})
+			->rawColumns(['action', 'is_admin'])
 			->make(true);
 	}
 	public function add(Request $request) {
@@ -39,22 +51,14 @@ class ManageEmployeeController extends Controller {
 		return view('manage_employee.edit', $data);
 	}
 	public function save(Request $request) {
-		$info['name'] = $request->name;
-		$info['status'] = $request->status;
-		$info['order_by'] = $request->order_by ? $request->order_by : 15;
-		$info['employee_pic'] = '';
-		if ($request->employee_pic) {
-			$directory = public_path() . '/employee_pic';
-			if (!is_dir($directory)) {
-				mkdir($directory);
-				chmod($directory, 0777);
-			}
-			$imageName = strtotime(date('Y-m-d H:i:s')) . '-' . str_replace(' ', '-', $request->file('employee_pic')->getClientOriginalName());
-			$newName = CommonHelper::getUrlFriendlyString($info['name'] . ' ' . strtotime(date('Y-m-d H:i:s')));
-			$imageName = $newName . '.' . $request->file('employee_pic')->getClientOriginalExtension();
-			$request->file('employee_pic')->move($directory, $imageName);
-			$info['employee_pic'] = 'employee_pic/' . $imageName;
+		if (User::where('email', $request->name)->first()) {
+			$request->session()->flash('error', "Email already exists!.");
+			return redirect(route('manage-employee'));
 		}
+		$info['name'] = $request->name;
+		$info['email'] = $request->email;
+		$info['password'] = $request->password;
+		$info['is_admin'] = $request->is_admin ? $request->is_admin : '0';
 		if ((new User)->createEmployee($info)) {
 			$request->session()->flash('success', "New Employee Created Successfully.");
 			return redirect(route('manage-employee'));
@@ -65,21 +69,10 @@ class ManageEmployeeController extends Controller {
 	}
 	public function update(Request $request) {
 		$info['name'] = $request->name;
-		$info['status'] = $request->status;
-		$info['order_by'] = $request->order_by ? $request->order_by : 15;
+		$info['email'] = $request->email;
+		$info['password'] = $request->password;
+		$info['is_admin'] = $request->is_admin ? $request->is_admin : '0';
 		$info['id'] = $request->id;
-		$info['employee_pic'] = '';
-		if ($request->employee_pic) {
-			$directory = public_path() . '/employee_pic';
-			if (!is_dir($directory)) {
-				mkdir($directory);
-				chmod($directory, 0777);
-			}
-			$imageName = strtotime(date('Y-m-d H:i:s')) . '-' . str_replace(' ', '-', $request->file('employee_pic')->getClientOriginalName());
-			$request->file('employee_pic')->move($directory, $imageName);
-			$info['employee_pic'] = 'employee_pic/' . $imageName;
-		}
-
 		if ((new User)->updateEmployee($info)) {
 			$request->session()->flash('success', "Employee Updated Successfully.");
 			return redirect(route('manage-employee'));

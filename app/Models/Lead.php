@@ -32,7 +32,7 @@ class Lead extends Authenticatable {
 
 	protected $primaryKey = 'id';
 
-	public function getLeadListAjax($created_by, $q = "") {
+	public function getLeadListAjax($created_by, $q = "", $date = "") {
 		$query = $this->select('leads.*', 'users.name as ename')->leftjoin('users', 'users.id', 'leads.created_by');
 
 		if ($q) {
@@ -40,6 +40,10 @@ class Lead extends Authenticatable {
 		}
 		if ($created_by) {
 			$query->where('created_by', $created_by);
+		}
+		if ($date) {
+			$my = explode('-', $date);
+			$query->whereRaw("(YEAR(leads.created_at) = $my[0] AND MONTH(leads.created_at) = $my[1])");
 		}
 		return $query;
 

@@ -59,6 +59,22 @@
               <input class="form-control" type="text" name="q" value="{{ $q }}">
           </div>
           </div>
+          <div class="form-group row">
+          <label for="staticEmail" class="col-sm-6 col-form-label">Date:</label>
+          <div class="col-sm-6">
+              <select class="form-control" name="date" id="date">
+                <option value="">All</option>
+                <?php
+for ($i = 0; $i <= 11; $i++) {
+	$months[] = date("Y-m", strtotime(date('Y-m-01') . " -$i months"));
+}
+?>
+                @foreach($months as $dateVal)
+                  <option value="{{ $dateVal }}" {{$date==$dateVal?'selected':''}}>{{ $dateVal }} ({{ date("F", strtotime(date($dateVal))) }})</option>
+                @endforeach
+              </select>
+          </div>
+          </div>
 
           <div class="form-group row">
           <label for="staticEmail" class="col-sm-6 col-form-label"></label>
@@ -126,7 +142,7 @@ $(document).ready(function() {
     "bInfo" : false,
     "aaSorting": [],
     "order": [[ 0, "desc" ]],
-    "ajax": "{!! route('getleadListAjax', ['created_by'=> $created_by, 'q'=>$q]) !!}",
+    "ajax": "{!! route('getleadListAjax', ['created_by'=> $created_by, 'q'=>$q, 'date'=>$date]) !!}",
     "columns": thData
   });
   //$('.dataTables_processing').html('<div class="lds-ripple"><div></div><div></div></div>');

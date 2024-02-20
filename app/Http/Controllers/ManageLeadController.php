@@ -14,6 +14,7 @@ class ManageLeadController extends Controller {
 			$data['users'] = User::all();
 			$data['created_by'] = $created_by = $request->created_by;
 			$data['q'] = $q = $request->q;
+			$data['date'] = $date = $request->date;
 			if ($request->action && $request->action == 'export') {
 				$rows = (new Lead)->getLeadListForexport($created_by, $q);
 				$excelData = array(
@@ -37,7 +38,8 @@ class ManageLeadController extends Controller {
 			$created_by = Auth::id();
 		}
 		$data['q'] = $q = $request->q;
-		$leads = (new Lead)->getLeadListAjax($created_by, $q);
+		$data['date'] = $date = $request->date;
+		$leads = (new Lead)->getLeadListAjax($created_by, $q, $date);
 		return datatables()->of($leads)
 			->addColumn('action', function ($lead) {
 				$action = '<div class="action-btn"><a class="btn btn-info btn-xs" title="Edit" href="' . route('manage-lead-edit', $lead->id) . '"><i class="fas fa-pencil-alt"></i></a>';

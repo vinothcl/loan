@@ -21,6 +21,21 @@ CREATE TABLE `failed_jobs` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
+DROP TABLE IF EXISTS `leads`;
+CREATE TABLE `leads` (
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `phone` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `address` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_by` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
 DROP TABLE IF EXISTS `migrations`;
 CREATE TABLE `migrations` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
@@ -30,12 +45,13 @@ CREATE TABLE `migrations` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
-(1,	'2014_10_12_000000_create_users_table',	1),
-(2,	'2014_10_12_100000_create_password_reset_tokens_table',	1),
-(3,	'2014_10_12_100000_create_password_resets_table',	1),
-(4,	'2019_08_19_000000_create_failed_jobs_table',	1),
-(5,	'2019_12_14_000001_create_personal_access_tokens_table',	1),
-(6,	'2024_02_15_105401_update_users_table',	1);
+(1, '2014_10_12_000000_create_leads_table', 1),
+(2, '2014_10_12_000000_create_users_table', 1),
+(3, '2014_10_12_100000_create_password_reset_tokens_table', 1),
+(4, '2014_10_12_100000_create_password_resets_table', 1),
+(5, '2019_08_19_000000_create_failed_jobs_table', 1),
+(6, '2019_12_14_000001_create_personal_access_tokens_table',  1),
+(7, '2024_02_15_105401_update_users_table', 1);
 
 DROP TABLE IF EXISTS `password_reset_tokens`;
 CREATE TABLE `password_reset_tokens` (
@@ -89,6 +105,7 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `is_admin`, `created_at`, `updated_at`) VALUES
-(1,	'test123',	'vinothc@techaffinity.com',	NULL,	'$2y$12$b8ZN1ezkmy21k0sPi/xO6uprzbGu4Qlneh7wJkd8pDoZKFbqSe8Jq',	NULL,	'1',	'2024-02-15 08:52:39',	'2024-02-15 08:52:39');
+(1, 'Vinothcl', 'clvinoth@gmail.com', NULL, '$2y$12$A7SZZQ0EQdQym7QCfZcilO16oBu2NeoTW/JhZEDq5h3ksF6/QSyXa', NULL, '1',  '2024-02-19 23:30:52',  '2024-02-19 23:30:52'),
+(2, 'Pawan',  'pawan@gmail.com',  NULL, '$2y$12$A7SZZQ0EQdQym7QCfZcilO16oBu2NeoTW/JhZEDq5h3ksF6/QSyXa', NULL, '1',  '2024-02-19 23:30:52',  '2024-02-19 23:30:52');
 
--- 2024-02-15 16:02:01
+-- 2024-02-20 13:33:57

@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Auth;
+use DB;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -48,14 +49,18 @@ class Lead extends Authenticatable {
 		return $query;
 
 	}
-	public function getLeadListForexport($created_by, $q = "") {
-		$query = $this->select('leads.name', 'leads.email', 'leads.phone', 'leads.address', 'leads.type', 'users.name as ename')->leftjoin('users', 'users.id', 'leads.created_by');
+	public function getLeadListForexport($created_by, $q = "", $date = "") {
+		$query = $this->select('leads.name', 'leads.email', 'leads.phone', 'leads.address', 'leads.type', 'users.name as ename', DB::RAW("DATE_FORMAT(leads.created_at,'%d-%m-%Y')"))->leftjoin('users', 'users.id', 'leads.created_by');
 
 		if ($q) {
 			$query->whereRaw("(leads.name like '%$q%' or leads.email like '%$q%'  or leads.phone like '%$q%'  or leads.type like '%$q%' or leads.address like '%$q%' or users.name like '%$q%' )");
 		}
 		if ($created_by) {
 			$query->where('created_by', $created_by);
+		}
+		if ($date) {
+			$my = explode('-', $date);
+			$query->whereRaw("(YEAR(leads.created_at) = $my[0] AND MONTH(leads.created_at) = $my[1])");
 		}
 		return $query->get()->toArray();
 

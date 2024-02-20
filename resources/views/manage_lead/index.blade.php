@@ -37,7 +37,7 @@
           <div class="alert alert-danger"> {!! session('error') !!} </div>
       @endif
       <div class="table-responsive">
-        <div class="offset-8 col-sm-4 text-right" style="padding: 10px;"><a href="{{ route('manage-lead-add') }}" class="btn btn-info btn-sm">Add lead</a></div>
+        <div class="col-xs-12 offset-sm-8 col-sm-4 text-right" style="padding: 10px;"><a href="{{ route('manage-lead-add') }}" class="btn btn-info btn-sm">Add lead</a></div>
         <table id="manage-lead" class="table table-bordered">
           <thead>
             <th>Name</th>

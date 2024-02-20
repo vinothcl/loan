@@ -16,9 +16,9 @@ class ManageLeadController extends Controller {
 			$data['q'] = $q = $request->q;
 			$data['date'] = $date = $request->date;
 			if ($request->action && $request->action == 'export') {
-				$rows = (new Lead)->getLeadListForexport($created_by, $q);
+				$rows = (new Lead)->getLeadListForexport($created_by, $q, $date);
 				$excelData = array(
-					'column' => ['Name', 'Email', 'Phone Number', 'Address', 'Req Type', 'Created By'],
+					'column' => ['Name', 'Email', 'Phone Number', 'Address', 'Req Type', 'Created By', 'Created At'],
 					'rows' => $rows,
 					'fileName' => 'Leads-Reports-' . date('d-m-y-H:i:s'),
 					'type' => 'xls',

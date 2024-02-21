@@ -39,9 +39,9 @@
       <div class="row">
     <div class="col-lg-12 col-12">
       <div class="table-responsive">
-        <div class="col-xs-12 offset-sm-8 col-sm-4 text-right" style="padding: 10px;"><a href="{{ route('manage-lead-add') }}" class="btn btn-info btn-sm">Add lead</a></div>
+        <div class="col-xs-12 offset-md-8 col-md-4 text-right" style="padding: 10px;"><a href="{{ route('manage-lead-add') }}" class="btn btn-info btn-sm">Add lead</a></div>
         <form action="{{ route('manage-lead') }}" method="GET">
-        <div class="col-xs-12 offset-sm-8 col-sm-4 text-right" style="padding: 10px;">
+        <div class="col-xs-12 offset-md-8 col-md-4 text-md-right text-sm-left" style="padding: 10px;">
           <div class="form-group row">
           <label for="staticEmail" class="col-sm-6 col-form-label">Created By:</label>
           <div class="col-sm-6">
